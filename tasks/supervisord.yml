@@ -1,0 +1,44 @@
+---
+- name: Install supervisord
+  pip: 
+    name=supervisor
+    state=present
+    extra_args="{{ python_pip_extra_args | default('')  }}"
+
+- name: Install supervisord init script
+  template:
+    src=supervisord.j2
+    dest=/etc/init.d/supervisord
+    owner=root
+    group=root
+    mode=0755
+
+- name: Prepare supervisord folders
+  file:
+    state=directory
+    name={{ item }}
+    owner=root
+    group=root
+    mode=0644
+  with_items:
+    - /etc/supervisord.d
+    - /var/log/supervisor
+
+- name: Install supervisord configuration file
+  template:
+    src=supervisord.conf.j2
+    dest=/etc/supervisord.conf
+    owner=root
+    group=root
+    mode=0755
+  notify: Restart supervisord
+
+- name: Enable supervisord init script
+  service:
+    name=supervisord
+    enabled=true
+
+- name: Start supervisord
+  service:
+    name=supervisord
+    state=started

@@ -1,0 +1,16 @@
+---
+# tasks file for sbux-python
+- include: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+- include: "redhat.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: Install virtualenv
+  pip:
+    name=virtualenv
+    state=present
+    extra_args="{{ python_pip_extra_args | default('')  }}"
+
+- include: supervisord.yml
+  when: python_supervisord

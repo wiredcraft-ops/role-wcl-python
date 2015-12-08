@@ -1,0 +1,17 @@
+---
+python_rpm_dependencies:
+    - python
+    - python-devel
+    - python-pip 
+    - make
+
+python_deb_dependencies:
+    - python
+    - python-dev
+    - python-pip 
+    - make
+
+python_supervisord: false
+
+# For China
+# python_pip_extra_args: '-i http://pypi.douban.com/simple --trusted-host pypi.douban.com'
