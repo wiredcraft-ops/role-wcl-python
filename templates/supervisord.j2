@@ -21,7 +21,6 @@ RETVAL=0
 start() {
     echo -n $"Starting supervisord: "
     # We provide a link from the virtualenv to /usr/bin
-    # daemon {{ python_virtualenvs }}/system/bin/supervisord
     daemon supervisord
     RETVAL=$?
     echo
